@@ -24,7 +24,7 @@ class RsSignalGen(wishful_module.AgentUpiModule):
         self.log = logging.getLogger('wifi_module.main')
 
     @wishful_module.bind_function(upis.radio.playWaveform)
-    def playWaveform(self, iface, freq, power_lvl):
+    def playWaveform(self, iface, freq, power_lvl, **kwargs):
         self.log.debug('playWaveform()')
 
         try:
@@ -63,7 +63,7 @@ class RsSignalGen(wishful_module.AgentUpiModule):
 
 
     @wishful_module.bind_function(upis.radio.stopWaveform)
-    def stopWaveform(self, iface):
+    def stopWaveform(self, iface, **kwargs):
         self.log.debug('stopWaveform()')
 
         try:
