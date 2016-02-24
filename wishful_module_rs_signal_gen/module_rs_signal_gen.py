@@ -13,13 +13,15 @@ __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
 __version__ = "0.1.0"
 __email__ = "{gawlowicz, zubow}@tkn.tu-berlin.de"
 
+"""
+Implementation of UPI_R and UPI_N interfaces for the R&S signal generator.
+"""
 
 @wishful_module.build_module
 class RsSignalGen(wishful_module.AgentUpiModule):
     def __init__(self, agentPort=None):
         super(RsSignalGen, self).__init__(agentPort)
         self.log = logging.getLogger('wifi_module.main')
-        self.power = 1
 
     @wishful_module.bind_function(upis.radio.playWaveform)
     def playWaveform(self, iface, freq, power_lvl):
