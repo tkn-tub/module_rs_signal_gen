@@ -102,3 +102,14 @@ class RsSignalGen(wishful_module.AgentUpiModule):
             raise Exception("An error occurred in Dot80211Linux: %s" % err)
 
         return [sp.returncode, out, err]
+
+    def getPlatformPath(self):
+        """
+        Path to platform dependent (native) binaries: here the binary to talk to the R&S signal generator
+        """
+
+        PLATFORM_PATH = os.path.join(".", "bin")
+        pl = platform.architecture()
+        sys = platform.system()
+        machine = platform.machine()
+        return os.path.join(PLATFORM_PATH, sys, pl[0], machine)
