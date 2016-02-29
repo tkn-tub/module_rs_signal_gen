@@ -18,9 +18,9 @@ Implementation of UPI_R and UPI_N interfaces for the R&S signal generator.
 """
 
 @wishful_module.build_module
-class RsSignalGen(wishful_module.AgentUpiModule):
-    def __init__(self, agentPort=None):
-        super(RsSignalGen, self).__init__(agentPort)
+class RsSignalGen(wishful_module.AgentModule):
+    def __init__(self):
+        super(RsSignalGen, self).__init__()
         self.log = logging.getLogger('wifi_module.main')
 
     @wishful_module.bind_function(upis.radio.play_waveform)
