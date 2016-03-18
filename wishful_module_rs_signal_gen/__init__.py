@@ -1,1 +1,1 @@
-from module_rs_signal_gen import *
+from .module_rs_signal_gen import *
