@@ -18,10 +18,10 @@ Implementation of UPI_R and UPI_N interfaces for the R&S signal generator.
 """
 
 @wishful_module.build_module
-class RsSignalGen(wishful_module.AgentModule):
+class RsSignalGenModule(wishful_module.AgentModule):
     def __init__(self):
-        super(RsSignalGen, self).__init__()
-        self.log = logging.getLogger('wifi_module.main')
+        super(RsSignalGenModule, self).__init__()
+        self.log = logging.getLogger('RsSignalGenModule')
 
     @wishful_module.bind_function(upis.radio.play_waveform)
     def play_waveform(self, iface, freq, power_lvl, **kwargs):
@@ -29,7 +29,7 @@ class RsSignalGen(wishful_module.AgentModule):
 
         try:
             # set the center frequency
-            exec_file = str(os.path.join(self.getPlatformPath())) + '/rs_siggen_etherraw'
+            exec_file = 'rs_siggen_etherraw'
             args = iface + ' \"FREQ ' + freq + 'MHz\"'
 
             command = exec_file + ' ' + args
@@ -56,10 +56,11 @@ class RsSignalGen(wishful_module.AgentModule):
 
             [rcode, sout, serr] = self.run_command(command)
 
+            return True
         except Exception as e:
-            self.log.fatal("An error occurred in %s" % e)
-            fname = inspect.currentframe().f_code.co_name
-            raise exceptions.UPIFunctionExecutionFailedException(func_name=fname, err_msg=str(e))
+            self.log.fatal("Failed to play waveform, err_msg:%s" % (str(e)))
+            raise exceptions.UPIFunctionExecutionFailedException(func_name=inspect.currentframe().f_code.co_name,
+                                                                 err_msg='Failed to play waveform: ' + str(e))
 
 
     @wishful_module.bind_function(upis.radio.stop_waveform)
@@ -77,10 +78,11 @@ class RsSignalGen(wishful_module.AgentModule):
 
             [rcode, sout, serr] = self.run_command(command)
 
+            return True
         except Exception as e:
-            self.log.fatal("An error occurred in %s" % e)
-            fname = inspect.currentframe().f_code.co_name
-            raise exceptions.UPIFunctionExecutionFailedException(func_name=fname, err_msg=str(e))
+            self.log.fatal("Failed to stop waveform, err_msg:%s" % (str(e)))
+            raise exceptions.UPIFunctionExecutionFailedException(func_name=inspect.currentframe().f_code.co_name,
+                                                                 err_msg='Failed to stop waveform: ' + str(e))
 
     def run_command(self, command):
         """
@@ -99,17 +101,7 @@ class RsSignalGen(wishful_module.AgentModule):
                 self.log.debug(err)
 
         if err:
-            raise Exception("An error occurred in Dot80211Linux: %s" % err)
+            raise Exception("An error occurred in RsSignalGenModule: %s" % err)
 
         return [sp.returncode, out.decode("utf-8"), err.decode("utf-8")]
 
-    def getPlatformPath(self):
-        """
-        Path to platform dependent (native) binaries: here the binary to talk to the R&S signal generator
-        """
-
-        PLATFORM_PATH = os.path.join(".", "bin")
-        pl = platform.architecture()
-        sys = platform.system()
-        machine = platform.machine()
-        return os.path.join(PLATFORM_PATH, sys, pl[0], machine)

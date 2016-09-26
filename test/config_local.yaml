@@ -1,0 +1,18 @@
+## WiSHFUL Agent config file
+
+agent_config:
+  name: 'Local_Controller'
+  info: 'local test of R&S signal generator module'
+  type: 'local'
+  iface: 'lo'
+
+controllers:
+  myController:
+      file : local_test.py
+      class_name : RSController
+      kwargs : {}
+
+modules:
+  rsmodule:
+      module : wishful_module_rs_signal_gen
+      class_name : RsSignalGenModule

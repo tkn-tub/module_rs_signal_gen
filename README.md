@@ -1,11 +1,13 @@
-WiSHFUL RS Signal Generator Module
-============================
+# Wishful R&S signal generator module
 
-This is a prototypic implementation of a wireless agent providing the Unified
-Programming Interfaces (UPIs) of the Wishful software platform for
-radio and network control.
+## Setup phase
 
-## Acknowledgement
+### Build and install hybrid MAC from source
+    cd src
+    make all
 
-The research leading to these results has received funding from the European
-Horizon 2020 Programme under grant agreement n645274 (WiSHFUL project).
+The R&S binary is copied into $(VIRTUAL_ENV)/bin
+
+## Test the module
+    cd test
+    wishful-agent --config config_local.yaml
