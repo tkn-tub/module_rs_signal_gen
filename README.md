@@ -1,9 +1,6 @@
-WiSHFUL RS Signal Generator Module
-============================
+# Wishful R&S signal generator module
 
-This is a prototypic implementation of a wireless agent providing the Unified
-Programming Interfaces (UPIs) of the Wishful software platform for
-radio and network control.
+The R&S signal generator can be controlled from this module.
 
 ## Installation
 
@@ -11,7 +8,11 @@ Make sure that the folder bin/ is in global PATH variable:
 
     export PATH=~/repos/wishful/modules/rs_signal_gen/bin:$PATH
     
-## Acknowledgement
+or execute the Makefile in src/ when using a Python virtualenv
 
-The research leading to these results has received funding from the European
-Horizon 2020 Programme under grant agreement n645274 (WiSHFUL project).
+    cd src ; make
+    
+## Test the module
+
+    cd test
+    wishful-agent --config config_local.yaml
