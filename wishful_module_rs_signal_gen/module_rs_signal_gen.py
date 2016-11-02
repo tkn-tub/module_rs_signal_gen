@@ -59,8 +59,9 @@ class RsSignalGenModule(wishful_module.AgentModule):
             return True
         except Exception as e:
             self.log.fatal("Failed to play waveform, err_msg:%s" % (str(e)))
-            raise exceptions.UPIFunctionExecutionFailedException(func_name=inspect.currentframe().f_code.co_name,
-                                                                 err_msg='Failed to play waveform: ' + str(e))
+            raise exceptions.FunctionExecutionFailedException(
+                func_name=inspect.currentframe().f_code.co_name,
+                err_msg='Failed to play waveform: ' + str(e))
 
 
     @wishful_module.bind_function(upis.radio.stop_waveform)
@@ -81,8 +82,9 @@ class RsSignalGenModule(wishful_module.AgentModule):
             return True
         except Exception as e:
             self.log.fatal("Failed to stop waveform, err_msg:%s" % (str(e)))
-            raise exceptions.UPIFunctionExecutionFailedException(func_name=inspect.currentframe().f_code.co_name,
-                                                                 err_msg='Failed to stop waveform: ' + str(e))
+            raise exceptions.FunctionExecutionFailedException(
+                func_name=inspect.currentframe().f_code.co_name,
+                err_msg='Failed to stop waveform: ' + str(e))
 
     def run_command(self, command):
         """
