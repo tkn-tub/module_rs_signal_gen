@@ -1,4 +1,4 @@
-# Wishful R&S signal generator module
+# UniFlex R&S signal generator module
 
 The R&S signal generator can be controlled from this module.
 
@@ -6,7 +6,7 @@ The R&S signal generator can be controlled from this module.
 
 Make sure that the folder bin/ is in global PATH variable:
 
-    export PATH=~/repos/wishful/modules/rs_signal_gen/bin:$PATH
+    export PATH=~/repos/uniflex/modules/rs_signal_gen/bin:$PATH
     
 or execute the Makefile in src/ when using a Python virtualenv
 
@@ -15,4 +15,4 @@ or execute the Makefile in src/ when using a Python virtualenv
 ## Test the module
 
     cd test
-    wishful-agent --config config_local.yaml
+    uniflex-agent --config config_local.yaml

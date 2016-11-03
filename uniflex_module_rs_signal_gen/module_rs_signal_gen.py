@@ -1,12 +1,10 @@
+import os
 import logging
-import random
-import wishful_upis as upis
-import wishful_framework as wishful_module
-from wishful_framework.classes import exceptions
 import inspect
 import subprocess
-import platform
-import os
+import wishful_upis as upis
+from uniflex.core import exceptions
+from uniflex.core import modules
 
 __author__ = "Piotr Gawlowicz, Anatolij Zubow"
 __copyright__ = "Copyright (c) 2015, Technische Universität Berlin"
@@ -17,13 +15,14 @@ __email__ = "{gawlowicz, zubow}@tkn.tu-berlin.de"
 Implementation of UPI_R and UPI_N interfaces for the R&S signal generator.
 """
 
-@wishful_module.build_module
-class RsSignalGenModule(wishful_module.AgentModule):
+
+@modules.build_module
+class RsSignalGenModule(modules.AgentModule):
     def __init__(self):
         super(RsSignalGenModule, self).__init__()
         self.log = logging.getLogger('RsSignalGenModule')
 
-    @wishful_module.bind_function(upis.radio.play_waveform)
+    @modules.bind_function(upis.radio.play_waveform)
     def play_waveform(self, iface, freq, power_lvl, **kwargs):
         self.log.debug('playWaveform()')
 
@@ -64,7 +63,7 @@ class RsSignalGenModule(wishful_module.AgentModule):
                 err_msg='Failed to play waveform: ' + str(e))
 
 
-    @wishful_module.bind_function(upis.radio.stop_waveform)
+    @modules.bind_function(upis.radio.stop_waveform)
     def stop_waveform(self, iface, **kwargs):
         self.log.debug('stopWaveform()')
 
@@ -106,4 +105,3 @@ class RsSignalGenModule(wishful_module.AgentModule):
             raise Exception("An error occurred in RsSignalGenModule: %s" % err)
 
         return [sp.returncode, out.decode("utf-8"), err.decode("utf-8")]
-
