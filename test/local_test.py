@@ -13,8 +13,7 @@ Local test of R&S module.
 '''
 
 
-@modules.build_module
-class RSController(modules.ControllerModule):
+class RSController(modules.ControlApplication):
     def __init__(self):
         super(RSController, self).__init__()
         self.log = logging.getLogger('RSController')

@@ -16,8 +16,7 @@ Implementation of UPI_R and UPI_N interfaces for the R&S signal generator.
 """
 
 
-@modules.build_module
-class RsSignalGenModule(modules.AgentModule):
+class RsSignalGenModule(modules.DeviceModule):
     def __init__(self):
         super(RsSignalGenModule, self).__init__()
         self.log = logging.getLogger('RsSignalGenModule')
