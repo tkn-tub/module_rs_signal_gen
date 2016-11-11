@@ -2,7 +2,7 @@ import os
 import logging
 import inspect
 import subprocess
-import wishful_upis as upis
+
 from uniflex.core import exceptions
 from uniflex.core import modules
 
@@ -21,7 +21,6 @@ class RsSignalGenModule(modules.DeviceModule):
         super(RsSignalGenModule, self).__init__()
         self.log = logging.getLogger('RsSignalGenModule')
 
-    @modules.bind_function(upis.radio.play_waveform)
     def play_waveform(self, iface, freq, power_lvl, **kwargs):
         self.log.debug('playWaveform()')
 
@@ -34,7 +33,7 @@ class RsSignalGenModule(modules.DeviceModule):
             self.log.debug('playWaveform on iface %s ... set frequency' % (iface))
             self.log.info('exec %s' % command)
 
-            [rcode, sout, serr] = self.run_command(command)
+            [rcode, sout, serr] = self._run_command(command)
 
             # set power level
             args = iface + ' \":POW ' + str(power_lvl) + '\"'
@@ -43,7 +42,7 @@ class RsSignalGenModule(modules.DeviceModule):
             self.log.debug('playWaveform on iface %s ... set power level to %s' % (iface, str(power_lvl)))
             self.log.info('exec %s' % command)
 
-            [rcode, sout, serr] = self.run_command(command)
+            [rcode, sout, serr] = self._run_command(command)
 
             # power on
             args = iface + ' \"OUTP ON\"'
@@ -52,7 +51,7 @@ class RsSignalGenModule(modules.DeviceModule):
             self.log.debug('playWaveform on iface %s ... power on' % (iface))
             self.log.info('exec %s' % command)
 
-            [rcode, sout, serr] = self.run_command(command)
+            [rcode, sout, serr] = self._run_command(command)
 
             return True
         except Exception as e:
@@ -61,8 +60,6 @@ class RsSignalGenModule(modules.DeviceModule):
                 func_name=inspect.currentframe().f_code.co_name,
                 err_msg='Failed to play waveform: ' + str(e))
 
-
-    @modules.bind_function(upis.radio.stop_waveform)
     def stop_waveform(self, iface, **kwargs):
         self.log.debug('stopWaveform()')
 
@@ -75,7 +72,7 @@ class RsSignalGenModule(modules.DeviceModule):
             self.log.debug('stopWaveform on iface %s ... power off' % (iface))
             self.log.debug('exec %s' % command)
 
-            [rcode, sout, serr] = self.run_command(command)
+            [rcode, sout, serr] = self._run_command(command)
 
             return True
         except Exception as e:
@@ -84,7 +81,7 @@ class RsSignalGenModule(modules.DeviceModule):
                 func_name=inspect.currentframe().f_code.co_name,
                 err_msg='Failed to stop waveform: ' + str(e))
 
-    def run_command(self, command):
+    def _run_command(self, command):
         """
             Method to start the shell commands and get the output as iterater object
         """
